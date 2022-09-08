@@ -22,13 +22,13 @@ protocol WaterfallLayoutDataSource : AnyObject {
 
 class WaterFullFlowLayout: UICollectionViewFlowLayout {
     
-     weak var dataSource : WaterfallLayoutDataSource?
+     weak var dataSource: WaterfallLayoutDataSource?
     
     //分成几列
-    fileprivate lazy var colCount : Int = self.dataSource?.numberOfCols(self) ?? 2
+    fileprivate lazy var colCount: Int = self.dataSource?.numberOfCols(self) ?? 2
     
     //保存所有的cell的Attributes
-    fileprivate lazy var attrs : [UICollectionViewLayoutAttributes] =  [UICollectionViewLayoutAttributes]()
+    fileprivate lazy var attrs: [UICollectionViewLayoutAttributes] =  []
     
     //保存所有Cell高度的数组
     fileprivate lazy var cellHeights : [CGFloat] = Array(repeating: self.sectionInset.top, count:self.colCount)
@@ -41,23 +41,28 @@ extension WaterFullFlowLayout{
         
         super.prepare()
         
-        guard let strongCollectionView = collectionView else { fatalError("没有CollectionView") }
+        guard let collectionView = collectionView else { fatalError("没有CollectionView") }
         
         //宽度
-        let width : CGFloat = (strongCollectionView.frame.width - sectionInset.left - sectionInset.right - CGFloat(colCount - 1) * minimumInteritemSpacing) / CGFloat(colCount)
+        let width : CGFloat = (collectionView.frame.width - sectionInset.left - sectionInset.right - CGFloat(colCount - 1) * minimumInteritemSpacing) / CGFloat(colCount)
         
         //拿到所有的item
-        let cellCount = strongCollectionView.numberOfItems(inSection: 0)
+        let cellCount = collectionView.numberOfItems(inSection: 0)
         
         //遍历所有的Cell
-        for i in attrs.count..<cellCount{
+        for i in attrs.count ..< cellCount {
             
             let indexPath = IndexPath(item: i, section: 0)
             
             let attr = UICollectionViewLayoutAttributes(forCellWith: indexPath)
             
+            // 最小值 (瀑布流是从较小的一边，向下拼接)
             let minH = cellHeights.min()!
+            print("minH - \(minH)")
+            
+            // 最小值的索引
             let minIndex = cellHeights.firstIndex(of: minH)!
+            print("minIndex - \(minIndex)")
             
             
             let cellX = sectionInset.left + (minimumInteritemSpacing + width) * CGFloat(minIndex)
@@ -75,7 +80,6 @@ extension WaterFullFlowLayout{
 
 //MARK: 返回所有Cell的layoutAttributes
 extension WaterFullFlowLayout{
-    
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         return attrs
     }
@@ -84,6 +88,7 @@ extension WaterFullFlowLayout{
 
 //MARK: 返回所有Cell的ContentSize
 extension WaterFullFlowLayout{
+    /// 因为cellHeights保存的是在滚动列表里面实际的高度，这里直接返回
     override var collectionViewContentSize: CGSize{
         return CGSize(width: 0, height: cellHeights.max()! + CGFloat(10))
     }

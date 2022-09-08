@@ -62,9 +62,9 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate{
     }
 }
 
-extension ViewController:WaterfallLayoutDataSource{
+extension ViewController: WaterfallLayoutDataSource{
     func numberOfCols(_ waterfall : WaterFullFlowLayout) -> Int{
-        return 2
+        return 3
     }
     
     
