@@ -56,6 +56,8 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate{
 
     }
     
+    
+    
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         itemCount += 20
         collectionView.reloadData()
@@ -69,7 +71,7 @@ extension ViewController: WaterfallLayoutDataSource{
     
     
     func waterfall(_ waterfall : WaterFullFlowLayout, item : Int) -> CGFloat{
-        return CGFloat(arc4random_uniform(150) + 100)
+        return 20//CGFloat(arc4random_uniform(150) + 100)
     }
 }
 

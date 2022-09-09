@@ -35,6 +35,7 @@ class WaterFullFlowLayout: UICollectionViewFlowLayout {
 
 }
 
+
 extension WaterFullFlowLayout{
     
     open override func prepare() {
@@ -58,15 +59,13 @@ extension WaterFullFlowLayout{
             
             // 最小值 (瀑布流是从较小的一边，向下拼接)
             let minH = cellHeights.min()!
-            print("minH - \(minH)")
             
             // 最小值的索引
             let minIndex = cellHeights.firstIndex(of: minH)!
-            print("minIndex - \(minIndex)")
             
             
             let cellX = sectionInset.left + (minimumInteritemSpacing + width) * CGFloat(minIndex)
-            let cellY = minH + minimumInteritemSpacing
+            let cellY = minH + minimumLineSpacing
             guard let height : CGFloat = dataSource?.waterfall(self, item: i) else {
                 fatalError("请实现对应的数据源方法,并且返回Cell高度")
             }
@@ -75,21 +74,17 @@ extension WaterFullFlowLayout{
             attrs.append(attr)
             cellHeights[minIndex] = cellY + height
         }
+        
+        print(attrs.count);
     }
-}
-
-//MARK: 返回所有Cell的layoutAttributes
-extension WaterFullFlowLayout{
+    
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         return attrs
     }
     
-}
-
-//MARK: 返回所有Cell的ContentSize
-extension WaterFullFlowLayout{
     /// 因为cellHeights保存的是在滚动列表里面实际的高度，这里直接返回
     override var collectionViewContentSize: CGSize{
-        return CGSize(width: 0, height: cellHeights.max()! + CGFloat(10))
+        return CGSize(width: 0, height: cellHeights.max()! + sectionInset.bottom)
     }
 }
+
