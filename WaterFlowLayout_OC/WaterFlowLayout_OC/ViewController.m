@@ -2,7 +2,7 @@
 //  ViewController.m
 //  WaterFlowLayout_OC
 //
-//  Created by shenxuejian on 2022/9/9.
+//  Created by KJX on 2022/9/9.
 //
 
 #import "ViewController.h"
@@ -36,7 +36,7 @@ static NSString * const kIdentifier = @"cellIdentifier";
 
 #pragma mark - UICollectionViewDelegate, UICollectionViewDataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 20;
+    return 100;
 }
 
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -47,11 +47,11 @@ static NSString * const kIdentifier = @"cellIdentifier";
 
 #pragma mark - JXWaterfullFlowLayoutDataSource
 - (NSInteger)numberOfColsWithLayout:(id)flowLayout {
-    return 2;
+    return 4;
 }
 
 - (CGFloat)waterfullLayout:(id)flowLayout heightForItemAtIndex:(NSInteger)index {
-    return 130;
+    return arc4random_uniform(150) + 30;
 }
 
 @end

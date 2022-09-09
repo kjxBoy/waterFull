@@ -2,7 +2,7 @@
 //  JXWaterFullFlowLayout.h
 //  WaterFlowLayout_OC
 //
-//  Created by shenxuejian on 2022/9/9.
+//  Created by KJX on 2022/9/9.
 //
 
 #import <UIKit/UIKit.h>

@@ -71,7 +71,7 @@ extension ViewController: WaterfallLayoutDataSource{
     
     
     func waterfall(_ waterfall : WaterFullFlowLayout, item : Int) -> CGFloat{
-        return 20//CGFloat(arc4random_uniform(150) + 100)
+        return CGFloat(arc4random_uniform(150) + 100)
     }
 }
 
